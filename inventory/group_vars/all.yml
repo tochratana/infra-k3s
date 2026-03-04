@@ -1,0 +1,36 @@
+---
+# File: inventory/group_vars/all.yml
+
+# K3s Configuration
+k3s_version: "v1.30.4+k3s1"
+k3s_install_mode: "standalone"  # Options: "standalone" or "ha"
+
+# Helm Configuration
+helm_version: "v3.12.0"
+
+# Ingress NGINX Configuration
+ingress_nginx_version: "4.7.1"
+ingress_nginx_replicas: 2
+
+# ArgoCD Configuration
+argocd_version: "5.36.1"
+argocd_ingress_host: "argocds.automatex.dev"  # Replace with your actual domain
+
+# Kubernetes Dashboard Configuration
+dashboard_version: "6.0.8"
+dashboard_ingress_host: "dash.automatex.dev"  # Replace with your actual domain
+
+# Cert-Manager Configuration
+cert_manager_version: "v1.12.0"
+cert_manager_email: "muyleanging@gmail.com"  # Replace with your actual email
+
+# Component toggles
+install_helm: true
+install_ingress_nginx: true
+install_argocd: true
+install_dashboard: true
+install_cert_manager: true
+
+# General cluster configuration
+cluster_name: "my-k3s-cluster"
+kubeconfig_path: "/etc/rancher/k3s/k3s.yaml"

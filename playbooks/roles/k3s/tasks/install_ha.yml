@@ -1,0 +1,22 @@
+---
+- name: Generate K3s config file
+  template:
+    src: k3s_config.ini.j2
+    dest: /tmp/k3s_config.ini
+  run_once: true
+  delegate_to: "{{ groups['k3s_masters'][0] }}"
+
+- name: Copy K3s HA setup script
+  template:
+    src: k3s_ha_setup.sh.j2
+    dest: /tmp/k3s_ha_setup.sh
+    mode: '0755'
+  run_once: true
+  delegate_to: "{{ groups['k3s_masters'][0] }}"
+
+- name: Run K3s HA setup script
+  command: /tmp/k3s_ha_setup.sh
+  args:
+    chdir: /tmp
+  run_once: true
+  delegate_to: "{{ groups['k3s_masters'][0] }}"

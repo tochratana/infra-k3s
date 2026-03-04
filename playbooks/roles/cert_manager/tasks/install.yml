@@ -1,0 +1,50 @@
+---
+- name: Check if K3s is running
+  command: systemctl is-active k3s
+  register: k3s_status
+  ignore_errors: true
+
+- name: Fail if K3s is not running
+  fail:
+    msg: "K3s is not running. Please start K3s before proceeding."
+  when: k3s_status.stdout != "active"
+
+- name: Add Jetstack Helm repository
+  command: helm repo add jetstack https://charts.jetstack.io
+  become: yes
+  environment:
+    KUBECONFIG: "{{ ansible_environment.KUBECONFIG }}"
+
+- name: Update Helm repositories
+  command: helm repo update
+  become: yes
+  environment:
+    KUBECONFIG: "{{ ansible_environment.KUBECONFIG }}"
+
+- name: Template cert-manager values
+  template:
+    src: cert-manager-values.yaml.j2
+    dest: /tmp/cert-manager-values.yaml
+
+- name: Deploy cert-manager
+  command: >
+    helm upgrade --install cert-manager jetstack/cert-manager
+    --version {{ cert_manager_version }}
+    --namespace cert-manager --create-namespace
+    -f /tmp/cert-manager-values.yaml
+    --set installCRDs=true
+    --kubeconfig {{ ansible_environment.KUBECONFIG }}
+  become: yes
+
+- name: Wait for cert-manager to be ready
+  command: kubectl wait --for=condition=available --timeout=300s deployment/cert-manager -n cert-manager --kubeconfig {{ ansible_environment.KUBECONFIG }}
+  become: yes
+
+- name: Template ClusterIssuer
+  template:
+    src: cluster-issuer.yaml.j2
+    dest: /tmp/cluster-issuer.yaml
+
+- name: Apply ClusterIssuer
+  command: kubectl apply -f /tmp/cluster-issuer.yaml --kubeconfig {{ ansible_environment.KUBECONFIG }}
+  become: yes

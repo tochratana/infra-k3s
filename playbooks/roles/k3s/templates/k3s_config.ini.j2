@@ -1,0 +1,11 @@
+# File: roles/k3s/templates/k3s_config.ini.j2
+[general]
+K3S_VERSION={{ k3s_version }}
+
+[nodes]
+{% for host in groups['k3s_masters'] %}
+NODE_IP={{ hostvars[host]['ansible_host'] }}
+{% endfor %}
+
+[ssh]
+USER={{ ansible_user }}

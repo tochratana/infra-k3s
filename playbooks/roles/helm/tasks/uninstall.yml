@@ -1,0 +1,6 @@
+---
+- name: Remove Helm binary
+  file:
+    path: /usr/local/bin/helm
+    state: absent
+  become: yes

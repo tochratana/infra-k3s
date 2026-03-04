@@ -1,0 +1,10 @@
+---
+- name: Set KUBECONFIG environment variable
+  set_fact:
+    ansible_environment: "{{ ansible_environment | default({}) | combine({'KUBECONFIG': '/etc/rancher/k3s/k3s.yaml'}) }}"
+
+- include_tasks: install.yml
+  when: k3s_action == "install"
+
+- include_tasks: uninstall.yml
+  when: k3s_action == "uninstall"

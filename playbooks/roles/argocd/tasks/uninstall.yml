@@ -1,0 +1,6 @@
+---
+- name: Uninstall ArgoCD
+  command: >
+    helm uninstall argocd
+    --namespace argocd
+  ignore_errors: yes

@@ -1,0 +1,8 @@
+controller:
+  replicaCount: {{ ingress_nginx_replicas | default(2) }}
+  service:
+    type: LoadBalancer
+  config:
+    use-forwarded-headers: "true"
+    compute-full-forwarded-for: "true"
+    use-proxy-protocol: "false"

@@ -1,0 +1,15 @@
+---
+- name: Download Helm
+  get_url:
+    url: "https://get.helm.sh/helm-{{ helm_version }}-linux-amd64.tar.gz"
+    dest: "/tmp/helm-{{ helm_version }}.tar.gz"
+
+- name: Extract Helm
+  unarchive:
+    src: "/tmp/helm-{{ helm_version }}.tar.gz"
+    dest: /tmp
+    remote_src: yes
+
+- name: Move Helm binary
+  command: "mv /tmp/linux-amd64/helm /usr/local/bin/helm"
+  become: yes

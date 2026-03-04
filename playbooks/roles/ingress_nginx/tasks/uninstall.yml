@@ -1,0 +1,6 @@
+---
+- name: Uninstall Ingress Nginx
+  command: >
+    helm uninstall ingress-nginx
+    --namespace ingress-nginx
+  ignore_errors: yes

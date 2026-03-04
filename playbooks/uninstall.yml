@@ -1,0 +1,22 @@
+---
+- hosts: k3s_masters[0]
+  roles:
+    - { role: cert_manager, tasks_from: uninstall, when: install_cert_manager | bool }
+    - { role: dashboard, tasks_from: uninstall, when: install_dashboard | bool }
+    - { role: argocd, tasks_from: uninstall, when: install_argocd | bool }
+    - { role: ingress_nginx, tasks_from: uninstall, when: install_ingress_nginx | bool }
+    - { role: helm, tasks_from: uninstall, when: install_helm | bool }
+
+# - hosts: localhost
+#   become: yes
+#   vars:
+#     ansible_play_name: "uninstall"
+#   roles:
+#     - k3s
+---
+- hosts: k3s_cluster
+  become: yes
+  vars:
+    k3s_uninstall: "uninstall"
+  roles:
+    - k3s

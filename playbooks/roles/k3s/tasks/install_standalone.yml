@@ -1,0 +1,22 @@
+---
+- name: Install K3s
+  shell: |
+    curl -sfL https://get.k3s.io | sh -s - \
+    --disable traefik \
+    --write-kubeconfig-mode 644 \
+    --tls-san {{ ansible_host }}
+  args:
+    creates: /usr/local/bin/k3s
+
+- name: Wait for K3s to be ready
+  wait_for:
+    path: /etc/rancher/k3s/k3s.yaml
+    state: present
+
+- name: Get nodes
+  command: k3s kubectl get nodes
+  register: nodes_output
+
+- name: Display nodes
+  debug:
+    var: nodes_output.stdout_lines

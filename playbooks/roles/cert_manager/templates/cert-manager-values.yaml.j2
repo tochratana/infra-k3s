@@ -1,0 +1,6 @@
+# File: roles/cert_manager/templates/cert-manager-values.yaml.j2
+installCRDs: true
+ingressShim:
+  defaultIssuerName: letsencrypt-prod
+  defaultIssuerKind: ClusterIssuer
+  defaultIssuerGroup: cert-manager.io

@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  connection: local
+  become: yes
+  vars:
+    k3s_action: install
+  roles:
+    - k3s
+    - { role: helm, when: install_helm | bool }
+    - { role: ingress_nginx, when: install_ingress_nginx | bool }
+    - { role: argocd, when: install_argocd | bool }
+    - { role: dashboard, when: install_dashboard | bool }
+    - { role: cert_manager, when: install_cert_manager | bool }

@@ -1,0 +1,6 @@
+---
+- include_tasks: install.yml
+  when: k3s_action == "install"
+
+- include_tasks: uninstall.yml
+  when: k3s_action == "uninstall"

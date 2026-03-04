@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  connection: local
+  become: yes
+  vars:
+    k3s_action: uninstall
+  roles:
+    - k3s
+    - helm
+    - ingress_nginx
+    - argocd
+    - dashboard
+    - cert_manager

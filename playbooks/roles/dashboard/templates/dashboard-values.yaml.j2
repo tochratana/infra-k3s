@@ -1,0 +1,9 @@
+ingress:
+  enabled: true
+  hosts:
+    - {{ dashboard_ingress_host }}
+  ingressClassName: nginx
+extraArgs:
+  - --token-ttl=86400
+metricsScraper:
+  enabled: true

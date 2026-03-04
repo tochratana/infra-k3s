@@ -1,0 +1,29 @@
+---
+- name: Uninstall K3s
+  command: /usr/local/bin/k3s-uninstall.sh
+  ignore_errors: yes
+
+- name: Remove K3s files and directories
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/rancher/k3s
+    - /var/lib/rancher/k3s
+    - /var/lib/kubelet
+    - /usr/local/bin/k3s
+    - /usr/local/bin/kubectl
+    - /usr/local/bin/crictl
+    - /usr/local/bin/ctr
+
+- name: Remove K3s service files
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/systemd/system/k3s.service
+    - /etc/systemd/system/k3s.service.env
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes

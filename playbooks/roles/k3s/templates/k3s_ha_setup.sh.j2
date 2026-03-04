@@ -1,0 +1,29 @@
+# File: roles/k3s/templates/k3s_ha_setup.sh.j2
+#!/bin/bash
+
+# K3s High Availability setup script
+K3S_TOKEN=$(openssl rand -hex 16)
+MASTER1_IP="{{ hostvars[groups['k3s_masters'][0]]['ansible_host'] }}"
+
+# Install K3s on the first master
+curl -sfL https://get.k3s.io | sh -s - server \
+    --cluster-init \
+    --tls-san $MASTER1_IP \
+    {% for host in groups['k3s_masters'] %}
+    --tls-san {{ hostvars[host]['ansible_host'] }} \
+    {% endfor %}
+    --node-ip $MASTER1_IP \
+    --token $K3S_TOKEN
+
+# Wait for K3s to be ready
+while ! kubectl get nodes &>/dev/null; do
+    sleep 5
+done
+
+# Install K3s on additional masters
+{% for host in groups['k3s_masters'][1:] %}
+ssh {{ ansible_user }}@{{ hostvars[host]['ansible_host'] }} "curl -sfL https://get.k3s.io | sh -s - server \
+    --server https://$MASTER1_IP:6443 \
+    --token $K3S_TOKEN \
+    --node-ip {{ hostvars[host]['ansible_host'] }}"
+{% endfor %}

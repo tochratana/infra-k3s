@@ -1,0 +1,22 @@
+---
+- name: Add Kubernetes Dashboard repository
+  command: helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+
+- name: Update Helm repositories
+  command: helm repo update
+
+- name: Template Dashboard values
+  template:
+    src: dashboard-values.yaml.j2
+    dest: /tmp/dashboard-values.yaml
+
+- name: Deploy Kubernetes Dashboard
+  command: >
+    helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard
+    --version {{ dashboard_version }}
+    --namespace kubernetes-dashboard --create-namespace
+    -f /tmp/dashboard-values.yaml
+    --kubeconfig /etc/rancher/k3s/k3s.yaml
+  become: yes
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
