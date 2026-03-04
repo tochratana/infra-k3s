@@ -2,7 +2,29 @@
 
 Automates provisioning of a **K3s Kubernetes cluster** (standalone or HA) with essential DevOps tooling using **Ansible**. Built by [@tochratana](https://github.com/tochratana).
 
+<p align="center">
+  <a href="https://github.com/tochratana/infra-k3s/stargazers">
+    <img src="https://img.shields.io/github/stars/tochratana/infra-k3s?style=social" alt="GitHub stars">
+  </a>
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="License">
+  </a>
+  <a href="#">
+    <img src="https://img.shields.io/badge/ansible-%3E%3D2.16-blue?style=flat-square&logo=ansible&logoColor=white" alt="Ansible">
+  </a>
+  <a href="#">
+    <img src="https://img.shields.io/badge/k3s-v1.30-brightgreen?style=flat-square" alt="K3s">
+  </a>
+  <a href="#">
+    <img src="https://img.shields.io/badge/platform-linux-lightgrey?style=flat-square&logo=linux" alt="Platform">
+  </a>
+  <a href="#">
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square" alt="PRs welcome">
+  </a>
+</p>
+
 ---
+
 
 ## 📦 Components
 
