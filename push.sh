@@ -29,6 +29,6 @@ echo -e "${YELLOW}✍️  Committing: \"$MESSAGE\"${NC}"
 git commit -m "$MESSAGE"
 
 echo -e "${YELLOW}🚀 Pushing to GitHub...${NC}"
-git push
+git push origin main
 
 echo -e "${GREEN}✅ Done! Successfully pushed to GitHub.${NC}"
