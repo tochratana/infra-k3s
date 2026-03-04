@@ -5,6 +5,12 @@
 default:
     @just --list
 
+# ─── Setup ──────────────────────────────────────────────────────────────────
+
+# Install all prerequisites (run this first after cloning!)
+setup:
+    bash setup.sh
+
 # ─── Install ────────────────────────────────────────────────────────────────
 
 # Install full cluster (K3s + all optional components)
