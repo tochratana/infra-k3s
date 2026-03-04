@@ -20,8 +20,16 @@ Automates provisioning of a **K3s Kubernetes cluster** (standalone or HA) with e
 ## ⚡ Prerequisites
 
 ```bash
-brew install just                    # macOS — task runner
-pip install -r requirements.txt      # Python tools (ansible, lint, etc.)
+# 1. Install pip3
+sudo apt update
+sudo apt install python3-pip -y
+
+# 2. Install just (task runner)
+sudo apt install snapd -y
+sudo snap install just --classic
+
+# 3. Install Python tools
+pip install -r requirements.txt
 ```
 
 ---
