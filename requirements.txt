@@ -1,0 +1,14 @@
+# requirements.txt — Python tools for Infrac_k3s
+# Install with: pip install -r requirements.txt
+
+# ─── Core ───────────────────────────────────────────────────────────────────
+ansible                 # Main automation engine
+ansible-core            # Core Ansible library
+
+# ─── Linting & Quality ──────────────────────────────────────────────────────
+ansible-lint            # Lint playbooks and roles
+yamllint                # Lint YAML files
+
+# ─── Useful Ansible Modules ─────────────────────────────────────────────────
+netaddr                 # Required for network/IP address filters in playbooks
+jmespath                # Required for json_query filter in playbooks
