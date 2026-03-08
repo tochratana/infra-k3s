@@ -1,34 +1,23 @@
 #!/bin/bash
 
-# Auto push to GitHub
-# Usage: bash push.sh "your commit message"
-#        bash push.sh          (uses default message with timestamp)
+# Check if message provided
+if [ -z "$1" ]; then
+  echo "❌ Please provide commit message"
+  echo "Usage: bash push.sh \"your message\""
+  exit 1
+fi
 
-set -e  # Exit on any error
+MSG=$1
 
-# ─── Colors ─────────────────────────────────────────────────────────────────
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-RED='\033[0;31m'
-NC='\033[0m' # No Color
-
-# ─── Commit Message ──────────────────────────────────────────────────────────
-TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
-MESSAGE="${1:-"chore: auto update [$TIMESTAMP]"}"
-
-echo -e "${YELLOW}📦 Staging all changes...${NC}"
 git add .
 
-# Check if there's anything to commit
+# Commit only if there are changes
 if git diff --cached --quiet; then
-  echo -e "${RED}⚠️  Nothing to commit. Working tree is clean.${NC}"
+  echo "⚠️ No changes to commit"
   exit 0
 fi
 
-echo -e "${YELLOW}✍️  Committing: \"$MESSAGE\"${NC}"
-git commit -m "$MESSAGE"
-
-echo -e "${YELLOW}🚀 Pushing to GitHub...${NC}"
+git commit -m "$MSG | $(date '+%Y-%m-%d %H:%M:%S')"
 git push origin main
 
-echo -e "${GREEN}✅ Done! Successfully pushed to GitHub.${NC}"
+echo "✅ Pushed with message: $MSG"
